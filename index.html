@@ -6,11 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Titel</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.js"></script>
+  <script src="https://sensordb.bbz.cloud/scripts/v1/dblib.js"></script>
 </head>
 <body>
+  <h3 class="title">To-Do</h3>
+  <p class="todo"></p>
+  <div class="table"></div>
     <script>
          //Javascript-Code hier
-         
+         /*query(`SELECT * FROM "users" INNER JOIN "todos" ON users.id = todos.user_id WHERE name LIKE 'Annika%'`, data => {
+          document.querySelector(".todo").textContent = data[0].description;
+          document.querySelector(".todo").textContent = data[0].deadline;
+         });*/
+
+         query(`SELECT description, deadline FROM "users" INNER JOIN "todos" ON users.id = todos.user_id WHERE name LIKE 'Annika%'`, data => {
+    const headers = Object.keys(data[0])
+    let t = "<table>"
+    for(const dat of data) {
+      t += `<tr>`
+      for(const col of headers) {
+        t += `<td>${dat[col]}</td>`
+      }
+      t += `</tr>`
+    }
+    t += `</table>`
+    document.querySelector('.table').innerHTML = t;
+  });
     </script>
 </body>
 </html>
