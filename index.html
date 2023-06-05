@@ -10,16 +10,15 @@
   <script src="https://sensordb.bbz.cloud/scripts/v1/dblib.js"></script>
 </head>
 <body>
-  <h3 class="title">To-Do</h3>
-  <p class="todo"></p>
+  <h3 class="title">To-Do Annika</h3>
   <div class="table"></div>
+  <h3 class="title woche1">Woche: 15.05.23 - 21.05.23</h3>
+  <div class="table2"></div>
+  <h3 class="title woche1">Woche: 22.05.23 - 29.05.23</h3>
+  <div class="table3"></div>
+
     <script>
          //Javascript-Code hier
-         /*query(`SELECT * FROM "users" INNER JOIN "todos" ON users.id = todos.user_id WHERE name LIKE 'Annika%'`, data => {
-          document.querySelector(".todo").textContent = data[0].description;
-          document.querySelector(".todo").textContent = data[0].deadline;
-         });*/
-
          query(`SELECT description, deadline FROM "users" INNER JOIN "todos" ON users.id = todos.user_id WHERE name LIKE 'Annika%'`, data => {
     const headers = Object.keys(data[0])
     let t = "<table>"
@@ -33,6 +32,35 @@
     t += `</table>`
     document.querySelector('.table').innerHTML = t;
   });
+
+  query(`SELECT description, deadline FROM "public"."todos" INNER JOIN "users" ON todos.user_id = users.id WHERE deadline < '2023-05-21' AND deadline > '2023-05-15' AND name LIKE 'Annika%' ORDER BY deadline ASC`, data => {
+    const headers = Object.keys(data[0])
+    let t = "<table>"
+    for(const dat of data) {
+      t += `<tr>`
+      for(const col of headers) {
+        t += `<td>${dat[col]}</td>`
+      }
+      t += `</tr>`
+    }
+    t += `</table>`
+    document.querySelector('.table2').innerHTML = t;
+  });
+
+  query(`SELECT description, deadline FROM "public"."todos" INNER JOIN "users" ON todos.user_id = users.id WHERE deadline < '2023-05-29' AND deadline > '2023-05-22' AND name LIKE 'Annika%' ORDER BY deadline ASC`, data => {
+    const headers = Object.keys(data[0])
+    let t = "<table>"
+    for(const dat of data) {
+      t += `<tr>`
+      for(const col of headers) {
+        t += `<td>${dat[col]}</td>`
+      }
+      t += `</tr>`
+    }
+    t += `</table>`
+    document.querySelector('.table3').innerHTML = t;
+  });
+
     </script>
 </body>
 </html>
