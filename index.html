@@ -19,6 +19,8 @@
   <div class="table3"></div>
   <h3 class="title tag">Erledigt am 10.05.23</h3>
   <div class="table4"></div>
+  <h3 class="aggregation">Anzahl Aufgaben, die Annika zugewiesen sind:</h3>
+  <p class="anzahl"></p>
 
   <script>
     //Javascript-Code hier
@@ -77,6 +79,22 @@
       t += `</table>`
       document.querySelector('.table4').innerHTML = t;
     });
+
+    // query(`SELECT COUNT(description) FROM "public"."todos" WHERE name LIKE 'Annika%'`, data => {
+    // document.querySelector(".anzahl")
+    // });
+
+    query(`SELECT COUNT(description) AS taskCount FROM "public"."todos" INNER JOIN "users" ON todos.user_id = users.id WHERE name LIKE 'Annika%'`, data => {
+      const taskCount = data[0].taskCount;
+      const anzahlElement = document.querySelector(".anzahl");
+
+      // Erstellen des HTML-Codes mit der Anzahl der Aufgaben
+      const html = `${taskCount}`;
+
+      // Einfügen des HTML-Codes in das DOM
+      anzahlElement.innerHTML = html;
+});
+
 
   </script>
 </body>
