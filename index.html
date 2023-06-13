@@ -19,19 +19,19 @@
   <div class="table3"></div>
 
     <script>
-         //Javascript-Code hier
-         query(`SELECT description, deadline FROM "users" INNER JOIN "todos" ON users.id = todos.user_id WHERE name LIKE 'Annika%'`, data => {
-    const headers = Object.keys(data[0])
-    let t = "<table>"
-    for(const dat of data) {
-      t += `<tr>`
-      for(const col of headers) {
-        t += `<td>${dat[col]}</td>`
+    //Javascript-Code hier
+    query(`SELECT description, deadline FROM "users" INNER JOIN "todos" ON users.id = todos.user_id WHERE name LIKE 'Annika%'`, data => {
+      const headers = Object.keys(data[0])
+      let t = "<table>"
+      for(const dat of data) {
+        t += `<tr>`
+        for(const col of headers) {
+          t += `<td>${dat[col]}</td>`
+        }
+        t += `</tr>`
       }
-      t += `</tr>`
-    }
-    t += `</table>`
-    document.querySelector('.table').innerHTML = t;
+      t += `</table>`
+      document.querySelector('.table').innerHTML = t;
   });
 
   query(`SELECT description, deadline FROM "public"."todos" INNER JOIN "users" ON todos.user_id = users.id WHERE deadline < '2023-05-21' AND deadline > '2023-05-15' AND name LIKE 'Annika%' ORDER BY deadline ASC`, data => {
@@ -62,6 +62,19 @@
     document.querySelector('.table3').innerHTML = t;
   });
 
+  query('SELECT description FROM "public"."todos" WHERE completed_at = '2023-05-10'`, data => {
+    const headers = Object.keys(data[0])
+    let t = "<table>"
+    for(const dat of data) {
+      t += `<tr>` 
+      for(const col of headers) {
+        t += `<td>${dat[col]}</td>`
+      }
+      t += `</tr>`
+    }
+    t += `</table>`
+    document.querySelector('.table3').innerHTML = t;
+  });
     </script>
 </body>
 </html>
